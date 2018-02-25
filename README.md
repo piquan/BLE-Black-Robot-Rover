@@ -1,12 +1,14 @@
-For more details on the AdaBox002 Rover project, please visit http://learn.adafruit.com/adabox002/.
+This is a series of cleanups and changes to the AdaBox002 Rover code
+from Adafruit.
 
-Adafruit invests time and resources providing this open source design, please support Adafruit and open-source hardware by purchasing products from Adafruit!
+The first few commits are generally useful to others (reformatting,
+etc), but later commits are specific to my own needs.  However,
+everything I'm putting on https://github.com/piquan/BLE-Black-Robot-Rover
+is open source (see LICENSE), and you're welcome to it.
 
-Written by Tyler Cooper for Adafruit Industries.
-BSD license, check license.txt for more information
+For more details on the AdaBox002 Rover project, please visit
+http://learn.adafruit.com/adabox002/.
 
-To download. click the DOWNLOADS button in the top right corner, rename the uncompressed folder BLE-Black-Robot-Rover. Check that the BLE-Black-Robot-Rover folder contains BLE-Black-Robot-Rover.ino.
-
-This code example requires the Adafruit BLE library which can be downloaded from https://github.com/adafruit/Adafruit_BluefruitLE_nRF51
-
-This code example also requires the Adafruit MotorShield library which can be downloaded from https://github.com/adafruit/Adafruit_Motor_Shield_V2_Library
+Adafruit invests time and resources providing this open source design,
+please support Adafruit and open-source hardware by purchasing
+products from Adafruit!
