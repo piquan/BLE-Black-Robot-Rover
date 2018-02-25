@@ -44,14 +44,14 @@ error(const __FlashStringHelper* err)
 // Motor
 //
 
-// Create the motor shield object with the default I2C address
+// Create the motor shield object with the default I2C address.
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
-// And connect 2 DC motors to port M3 & M4 !
+// Connect 2 DC motors to port M3 & M4.
 Adafruit_DCMotor *L_MOTOR = AFMS.getMotor(3);
 Adafruit_DCMotor *R_MOTOR = AFMS.getMotor(4);
 
-// Set your forward, reverse, and turning speeds
+// Set the forward, reverse, and turning speeds.
 #define ForwardSpeed                255
 #define ReverseSpeed                255
 #define TurningSpeed                100
@@ -68,55 +68,56 @@ String BROADCAST_CMD = String("AT+GAPDEVNAME=" + BROADCAST_NAME);
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ,
                              BLUEFRUIT_SPI_RST);
 
-// function prototypes over in packetparser.cpp
+// Function prototypes for functions in packetparser.cpp.
 uint8_t readPacket(Adafruit_BLE* ble, uint16_t timeout);
 float parsefloat(uint8_t* buffer);
 void printHex(const uint8_t* data, const uint32_t numBytes);
 
-// the packet buffer
+// The packet buffer.
 extern uint8_t packetbuffer[];
 
+// The transmit buffer.
 char buf[60];
 
 void
 BLEsetup()
 {
-    Serial.print(F("Initialising the Bluefruit LE module: "));
+    Serial.print(F("Initializing the Bluefruit LE module: "));
 
     if (!ble.begin(VERBOSE_MODE)) {
-        error(F("Couldn't find Bluefruit, make sure it's in "
-                "CoMmanD mode & check wiring?"));
+        error(F("Couldn't find Bluefruit.  Make sure it's in "
+                "command mode, and check wiring."));
     }
-    Serial.println(F("OK!"));
+    Serial.println(F("Ok."));
 
-    // Perform a factory reset to make sure everything is in a known state
-    Serial.println(F("Performing a factory reset: "));
+    // Perform a factory reset to make sure everything is in a known state.
+    Serial.println(F("Performing a factory reset."));
     if (!ble.factoryReset()) {
-        error(F("Couldn't factory reset"));
+        error(F("Couldn't factory reset."));
     }
-    // Convert the name change command to a char array
+    // Convert the name change command to a char array.
     BROADCAST_CMD.toCharArray(buf, 60);
 
-    // Change the broadcast device name here!
+    // Change the broadcast device name.
     if (ble.sendCommandCheckOK(buf)) {
-        Serial.println("name changed");
+        Serial.println("Name changed.");
     }
     delay(250);
 
-    // reset to take effect
+    // Reset to take effect.
     if (ble.sendCommandCheckOK("ATZ")) {
-        Serial.println("resetting");
+        Serial.println("Resetting.");
     }
     delay(250);
 
-    // Confirm name change
+    // Confirm the name change.
     ble.sendCommandCheckOK("AT+GAPDEVNAME");
 
-    // Disable command echo from Bluefruit
+    // Disable command echo from Bluefruit.
     ble.echo(false);
 
     Serial.println("Requesting Bluefruit info:");
-    // Print Bluefruit information
+    // Print Bluefruit information.
     ble.info();
 
     Serial.println(F("Please use Adafruit Bluefruit LE app to "
@@ -125,20 +126,18 @@ BLEsetup()
                      "game controller, etc!"));
     Serial.println();
 
-    ble.verbose(false); // debug info is a little annoying after this point!
+    ble.verbose(false); // Debug info is a little annoying after this point!
 
-    // Wait for connection
+    // Wait for a connection.
     while (!ble.isConnected()) {
         delay(500);
     }
 
-    Serial.println(F("*****************"));
-
-    // Set Bluefruit to DATA mode
-    Serial.println(F("Switching to DATA mode!"));
+    // Set Bluefruit to DATA mode.
+    Serial.println(F("***********************"));
+    Serial.println(F("Switching to DATA mode."));
     ble.setMode(BLUEFRUIT_MODE_DATA);
-
-    Serial.println(F("*****************"));
+    Serial.println(F("***********************"));
 }
 
 //
@@ -214,8 +213,6 @@ readController()
         uint8_t buttnum = packetbuffer[2] - '0';
         boolean pressed = packetbuffer[3] - '0';
 
-        // Serial.println(buttnum);
-
         if (pressed) {
             if (buttnum == 1) {
                 if (hasplayed == true) {
@@ -224,13 +221,11 @@ readController()
                 for (int i = 0; i < 17; i++) {
                     int tom = melod[i];
                     int tempo = ritmo[i];
-
                     long tvalue = tempo * vel;
 
                     tocar(tom, tvalue);
-
                     delayMicroseconds(1000);
-                }		// delay(1000);
+                }
 
                 hasplayed = true;
             }
@@ -277,7 +272,7 @@ readController()
 
             lastPress = millis();
 
-            // speed up the motors
+            // Speed up the motors.
             for (int speed = 0; speed < maxspeed; speed += 5) {
                 L_MOTOR->setSpeed(speed);
                 R_MOTOR->setSpeed(speed);
@@ -285,7 +280,7 @@ readController()
             }
         } else {
             isMoving = false;
-            // slow down the motors
+            // Slow down the motors.
             for (int speed = maxspeed; speed >= 0; speed -= 5) {
                 L_MOTOR->setSpeed(speed);
                 R_MOTOR->setSpeed(speed);
@@ -302,20 +297,16 @@ readController()
 // Entry points
 //
 
-/**************************************************************************/
-/*!
- * @brief Sets up the HW and the BLE module (this function is called
- *        automatically on startup)
- */
-/**************************************************************************/
+// Sets up the hardware and the Bluetooth LE module.  This function is
+// called automatically on startup.
 void
 setup(void)
 {
     Serial.begin(9600);
 
-    AFMS.begin();		// create with the default frequency 1.6KHz
+    AFMS.begin();        // Create with the default frequency, 1.6KHz.
 
-    // turn on motors
+    // Configure the motors.
     L_MOTOR->setSpeed(0);
     L_MOTOR->run(RELEASE);
 
@@ -324,9 +315,9 @@ setup(void)
 
     Serial.begin(115200);
     Serial.println(F("Adafruit Bluefruit Robot Controller Example"));
-    Serial.println(F("-----------------------------------------"));
+    Serial.println(F("-------------------------------------------"));
 
-    // Initialize the module
+    // Initialize the module.
     BLEsetup();
 
     pinMode(speaker, OUTPUT);
@@ -335,7 +326,7 @@ setup(void)
 void
 loop(void)
 {
-    // read new packet data
+    // Read new packet data.
     uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
 
     readController();
