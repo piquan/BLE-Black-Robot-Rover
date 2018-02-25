@@ -1,18 +1,25 @@
-/*********************************************************************
- This is an example for our nRF51822 based Bluefruit LE modules
-  
- Modified to drive a 3-wheeled BLE Robot Rover! by http://james.devi.to
-
- Pick one up today in the Adafruit shop!
-
- Adafruit invests time and resources providing this open source code,
- please support Adafruit and open-source hardware by purchasing
- products from Adafruit!
-
- MIT license, check LICENSE for more information
- All text above, and the splash screen below must be included in
- any redistribution
-*********************************************************************/
+/* Erin and Joel's Robot
+ *
+ * This is code that's based on the Adafruit Adabox 002; see
+ * https://learn.adafruit.com/adabox002/ .  I've cleaned it up,
+ * changed it to my own whims, and added many new bugs.
+ *
+ * The Adafruit copyright notice is as follows:
+ * 
+ *   This is an example for our nRF51822 based Bluefruit LE modules
+ *    
+ *   Modified to drive a 3-wheeled BLE Robot Rover! by http://james.devi.to
+ *   
+ *   Pick one up today in the Adafruit shop!
+ *   
+ *   Adafruit invests time and resources providing this open source code,
+ *   please support Adafruit and open-source hardware by purchasing
+ *   products from Adafruit!
+ *   
+ *   MIT license, check LICENSE for more information
+ *   All text above, and the splash screen below must be included in
+ *   any redistribution
+ */
 
 #include <Arduino.h>
 #include <Adafruit_BLE.h>
